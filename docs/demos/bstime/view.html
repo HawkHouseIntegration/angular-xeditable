@@ -1,5 +1,14 @@
 <div ng-controller="BstimeCtrl">
-  <a href="#" editable-bstime="user.time" e-show-meridian="false" e-minute-step="10">
-    {{ (user.time | date:"HH:mm") || 'empty' }}
-  </a>
+  <div>
+    <p>Inline</p>
+    <a href="#" editable-bstime="user.time" e-show-meridian="false" e-minute-step="10">
+      {{ (user.time | date:"HH:mm") || 'empty' }}
+    </a>
+  </div>
+  <div>
+    <p>Popup</p>
+    <a href="#" editable-bstime-popup="user.time" e-show-meridian="false" e-minute-step="10">
+      {{ (user.time | date:"HH:mm") || 'empty' }}
+    </a>
+  </div>
 </div>

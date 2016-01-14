@@ -18,16 +18,16 @@ angular.module('xeditable').directive('editableBsdate', ['editableDirectiveFacto
 				var buttonDatePicker = angular.element('<button type="button" class="btn btn-default"><i class="glyphicon glyphicon-calendar"></i></button>');
 				var buttonWrapper = angular.element('<span class="input-group-btn"></span>');
 
-				inputDatePicker.attr('datepicker-popup', this.attrs.eDatepickerPopupXEditable || 'yyyy/MM/dd' );
+				inputDatePicker.attr('uib-datepicker-popup', this.attrs.eDatepickerPopupXEditable || 'yyyy/MM/dd' );
 				inputDatePicker.attr('is-open', this.attrs.eIsOpen);
 				inputDatePicker.attr('date-disabled', this.attrs.eDateDisabled);
-				inputDatePicker.attr('datepicker-popup', this.attrs.eDatepickerPopup);
+				inputDatePicker.attr('uib-datepicker-popup', this.attrs.eDatepickerPopup);
 				inputDatePicker.attr('datepicker-mode', this.attrs.eDatepickerMode || 'day');
 				inputDatePicker.attr('min-date', this.attrs.eMinDate);
 				inputDatePicker.attr('max-date', this.attrs.eMaxDate);
 				inputDatePicker.attr('show-weeks', this.attrs.eShowWeeks || true);
 				inputDatePicker.attr('starting-day', this.attrs.eStartingDay || 0);
-				inputDatePicker.attr('init-date', this.attrs.eInitDate || new Date());
+				inputDatePicker.attr('init-date', this.attrs.eInitDate);
 				inputDatePicker.attr('min-mode', this.attrs.eMinMode || 'day');
 				inputDatePicker.attr('max-mode', this.attrs.eMaxMode || 'year');
 				inputDatePicker.attr('format-day', this.attrs.eFormatDay || 'dd');
