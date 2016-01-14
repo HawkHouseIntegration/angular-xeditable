@@ -113,4 +113,12 @@ a.editable-empty:focus {
   text-decoration: none;
 }
 
+.bs-core-timepicker-popup {
+  position: absolute;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  padding: 5px;
+  z-index: 10;
+}
 
