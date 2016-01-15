@@ -845,9 +845,21 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["combodate"]=v; }); });
                       <!-- watch change of user to update rootScope for debugging-->
                       <h3>demo</h3>
                       <div class="well line-example"><div ng-controller="BsdatetimeCtrl">
-    <a href="#" editable-bsdatetime-popup="user.datetime" blur="ignore" e-mode="datetime" e-is-open="opened.$data" e-ng-click="open($event,'$data')" e-datetime-format="DD.MM.YYYY HH:mm">
-        {{ (user.datetime | date:"dd.MM.yyyy HH:mm") || 'empty' }}
-    </a>
+    <div>
+        <a href="#" editable-bsdatetime-popup="user.datetime" blur="ignore" e-mode="datetime" e-is-open="opened.$data" e-ng-click="open($event,'$data')" e-datetime-format="DD.MM.YYYY HH:mm">
+            {{ (user.datetime | date:"dd.MM.yyyy HH:mm") || 'empty' }}
+        </a>
+    </div>
+    <div>
+        <a href="#" editable-bsdatetime-popup="user.datetime" blur="ignore" e-mode="date" e-is-open="opened.$data" e-ng-click="open($event,'$data')" e-datetime-format="DD.MM.YYYY">
+            {{ (user.datetime | date:"dd.MM.yyyy") || 'empty' }}
+        </a>
+    </div>
+    <div>
+        <a href="#" editable-bsdatetime-popup="user.datetime" blur="ignore" e-mode="time" e-is-open="opened.$data" e-ng-click="open($event,'$data')" e-datetime-format="HH:mm">
+            {{ (user.datetime | date:"HH:mm") || 'empty' }}
+        </a>
+    </div>
 </div></div>
                       <pre>{{ debug["bsdatetime"] | json }}</pre>
                       <p><p>Datetime popup control is implemented via <a href="http://angular-ui.github.io/bootstrap/#/datepicker">Angular-ui bootstrap datepicker</a> and <a href="http://angular-ui.github.io/bootstrap/#/timepicker">Angular-ui bootstrap timepicker</a>.
@@ -875,9 +887,21 @@ Other parameters can be defined via <code>e-*</code> syntax, e.g. <code>e-datepi
 $scope.$watch("user", function(v) { $scope.$parent.debug["bsdatetime"]=v; }); });</script>
                       <h3>html</h3>
                       <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;BsdatetimeCtrl&quot;&gt;
-    &lt;a href=&quot;#&quot; editable-bsdatetime-popup=&quot;user.datetime&quot; blur=&quot;ignore&quot; e-mode=&quot;datetime&quot; e-is-open=&quot;opened.$data&quot; e-ng-click=&quot;open($event,'$data')&quot; e-datetime-format=&quot;DD.MM.YYYY HH:mm&quot;&gt;
-        {{ (user.datetime | date:&quot;dd.MM.yyyy HH:mm&quot;) || 'empty' }}
-    &lt;/a&gt;
+    &lt;div&gt;
+        &lt;a href=&quot;#&quot; editable-bsdatetime-popup=&quot;user.datetime&quot; blur=&quot;ignore&quot; e-mode=&quot;datetime&quot; e-is-open=&quot;opened.$data&quot; e-ng-click=&quot;open($event,'$data')&quot; e-datetime-format=&quot;DD.MM.YYYY HH:mm&quot;&gt;
+            {{ (user.datetime | date:&quot;dd.MM.yyyy HH:mm&quot;) || 'empty' }}
+        &lt;/a&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+        &lt;a href=&quot;#&quot; editable-bsdatetime-popup=&quot;user.datetime&quot; blur=&quot;ignore&quot; e-mode=&quot;date&quot; e-is-open=&quot;opened.$data&quot; e-ng-click=&quot;open($event,'$data')&quot; e-datetime-format=&quot;DD.MM.YYYY&quot;&gt;
+            {{ (user.datetime | date:&quot;dd.MM.yyyy&quot;) || 'empty' }}
+        &lt;/a&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+        &lt;a href=&quot;#&quot; editable-bsdatetime-popup=&quot;user.datetime&quot; blur=&quot;ignore&quot; e-mode=&quot;time&quot; e-is-open=&quot;opened.$data&quot; e-ng-click=&quot;open($event,'$data')&quot; e-datetime-format=&quot;HH:mm&quot;&gt;
+            {{ (user.datetime | date:&quot;HH:mm&quot;) || 'empty' }}
+        &lt;/a&gt;
+    &lt;/div&gt;
 &lt;/div&gt;</pre>
                       <h3>controller.js</h3>
                       <pre class="prettyprint">app.controller('BsdatetimeCtrl', function($scope) {

@@ -212,7 +212,7 @@ angular.module('xeditable').directive('bsCoreDatetimePopup', function(){
     return {
         restrict: 'A',
         template: "<div class=\"bs-core-datetimepicker-popup\" ng-show=\"isOpen\" ng-style=\"{top: popupPosition.top+'px', left: popupPosition.left+'px'}\">\n" +
-        "    <div ng-if=\"mode !== 'date'\">\n" +
+        "    <div ng-if=\"mode !== 'date'\" ng-click='console.log(mode)'>\n" +
         "        <uib-timepicker ng-model=\"$parent.dateTimeModel\" hour-step=\"1\" minute-step=\"1\" show-meridian=\"false\" style=\"margin: 0 auto\"></uib-timepicker>\n" +
         "    </div>\n" +
         "    <div ng-if=\"mode !== 'time'\">\n" +
@@ -225,7 +225,7 @@ angular.module('xeditable').directive('bsCoreDatetimePopup', function(){
             'popupPosition': '=',
             'dateTimeModel': '=',
             'onChange': '&',
-            'mode': '@'
+            'mode': '='
         },
         replace: true,
         transclude: true
