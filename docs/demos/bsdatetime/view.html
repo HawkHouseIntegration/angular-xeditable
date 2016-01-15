@@ -1,11 +1,11 @@
 <div ng-controller="BsdatetimeCtrl">
     <div>
-        <a href="#" editable-bsdatetime-popup="user.datetime" blur="ignore" e-mode="datetime" e-is-open="opened.$data" e-ng-click="open($event,'$data')" e-datetime-format="DD.MM.YYYY HH:mm">
+        <a href="#" editable-bsdatetime-popup="user.datetime" blur="ignore" e-mode="datetime" e-is-open="opened.$data" e-ng-click="open($event,'$data')" e-datetime-format="dd.MM.yyyy HH:mm">
             {{ (user.datetime | date:"dd.MM.yyyy HH:mm") || 'empty' }}
         </a>
     </div>
     <div>
-        <a href="#" editable-bsdatetime-popup="user.datetime" blur="ignore" e-mode="date" e-is-open="opened.$data" e-ng-click="open($event,'$data')" e-datetime-format="DD.MM.YYYY">
+        <a href="#" editable-bsdatetime-popup="user.datetime" blur="ignore" e-mode="date" e-is-open="opened.$data" e-ng-click="open($event,'$data')" e-datetime-format="dd.MM.yyyy">
             {{ (user.datetime | date:"dd.MM.yyyy") || 'empty' }}
         </a>
     </div>

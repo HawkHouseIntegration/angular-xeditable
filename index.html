@@ -846,12 +846,12 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["combodate"]=v; }); });
                       <h3>demo</h3>
                       <div class="well line-example"><div ng-controller="BsdatetimeCtrl">
     <div>
-        <a href="#" editable-bsdatetime-popup="user.datetime" blur="ignore" e-mode="datetime" e-is-open="opened.$data" e-ng-click="open($event,'$data')" e-datetime-format="DD.MM.YYYY HH:mm">
+        <a href="#" editable-bsdatetime-popup="user.datetime" blur="ignore" e-mode="datetime" e-is-open="opened.$data" e-ng-click="open($event,'$data')" e-datetime-format="dd.MM.yyyy HH:mm">
             {{ (user.datetime | date:"dd.MM.yyyy HH:mm") || 'empty' }}
         </a>
     </div>
     <div>
-        <a href="#" editable-bsdatetime-popup="user.datetime" blur="ignore" e-mode="date" e-is-open="opened.$data" e-ng-click="open($event,'$data')" e-datetime-format="DD.MM.YYYY">
+        <a href="#" editable-bsdatetime-popup="user.datetime" blur="ignore" e-mode="date" e-is-open="opened.$data" e-ng-click="open($event,'$data')" e-datetime-format="dd.MM.yyyy">
             {{ (user.datetime | date:"dd.MM.yyyy") || 'empty' }}
         </a>
     </div>
@@ -888,12 +888,12 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["bsdatetime"]=v; }); })
                       <h3>html</h3>
                       <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;BsdatetimeCtrl&quot;&gt;
     &lt;div&gt;
-        &lt;a href=&quot;#&quot; editable-bsdatetime-popup=&quot;user.datetime&quot; blur=&quot;ignore&quot; e-mode=&quot;datetime&quot; e-is-open=&quot;opened.$data&quot; e-ng-click=&quot;open($event,'$data')&quot; e-datetime-format=&quot;DD.MM.YYYY HH:mm&quot;&gt;
+        &lt;a href=&quot;#&quot; editable-bsdatetime-popup=&quot;user.datetime&quot; blur=&quot;ignore&quot; e-mode=&quot;datetime&quot; e-is-open=&quot;opened.$data&quot; e-ng-click=&quot;open($event,'$data')&quot; e-datetime-format=&quot;dd.MM.yyyy HH:mm&quot;&gt;
             {{ (user.datetime | date:&quot;dd.MM.yyyy HH:mm&quot;) || 'empty' }}
         &lt;/a&gt;
     &lt;/div&gt;
     &lt;div&gt;
-        &lt;a href=&quot;#&quot; editable-bsdatetime-popup=&quot;user.datetime&quot; blur=&quot;ignore&quot; e-mode=&quot;date&quot; e-is-open=&quot;opened.$data&quot; e-ng-click=&quot;open($event,'$data')&quot; e-datetime-format=&quot;DD.MM.YYYY&quot;&gt;
+        &lt;a href=&quot;#&quot; editable-bsdatetime-popup=&quot;user.datetime&quot; blur=&quot;ignore&quot; e-mode=&quot;date&quot; e-is-open=&quot;opened.$data&quot; e-ng-click=&quot;open($event,'$data')&quot; e-datetime-format=&quot;dd.MM.yyyy&quot;&gt;
             {{ (user.datetime | date:&quot;dd.MM.yyyy&quot;) || 'empty' }}
         &lt;/a&gt;
     &lt;/div&gt;

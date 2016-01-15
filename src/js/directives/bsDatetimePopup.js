@@ -17,7 +17,7 @@ angular.module('xeditable').directive('editableBsdatetimePopup', ['editableDirec
         });
     }]);
 
-angular.module('xeditable').directive('editableBsdatetimePopupInternal', ['$compile', '$document', '$uibPosition', function($compile, $document, $position){
+angular.module('xeditable').directive('editableBsdatetimePopupInternal', ['$compile', '$document', '$uibPosition', '$filter', function($compile, $document, $position, $filter){
     function link($scope, $element, attr){
         $scope.isOpen = false;
         $scope.popupPosition = {};
@@ -40,8 +40,18 @@ angular.module('xeditable').directive('editableBsdatetimePopupInternal', ['$comp
         });
 
         $scope.$watch('$data', function(newValue){
-            var datetimeMoment = moment(newValue);
-            $scope.dateTimeModel = datetimeMoment.isValid() ? datetimeMoment.format(format) : '';
+            if ( Object.prototype.toString.call(newValue) === "[object Date]" ) {
+                // it is a date
+                if ( isNaN( newValue.getTime() ) ) {
+                    $scope.dateTimeModel = '';
+                }
+                else {
+                    $scope.dateTimeModel = $filter('date')(newValue, format);
+                }
+            }
+            else {
+                $scope.dateTimeModel = '';
+            }
         });
 
         function openPicker() {
