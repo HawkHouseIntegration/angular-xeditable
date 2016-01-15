@@ -509,9 +509,18 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["textarea"]=v; }); });<
                       <!-- watch change of user to update rootScope for debugging-->
                       <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/33/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="CheckboxCtrl">
+  <div>
+    <h4>basicCheckbox</h4>
   <a href="#" editable-checkbox="user.remember" e-title="Remember?">
     {{ user.remember && "Remember me!" || "Don't remember" }}
   </a>
+  </div>
+  <div>
+    <h4>customCheckbox</h4>
+    <a href="#" editable-checkbox-custom="user.remember" e-title="Remember?">
+      {{ user.remember && "Remember me!" || "Don't remember" }}
+    </a>
+  </div>
 </div></div>
                       <pre>{{ debug["checkbox"] | json }}</pre>
                       <p><p>To make element editable via checkbox just add <code>editable-checkbox</code> attribute 
@@ -525,9 +534,18 @@ pointing to model in scope. Set <code>e-title</code> attribute to define text sh
 $scope.$watch("user", function(v) { $scope.$parent.debug["checkbox"]=v; }); });</script>
                       <h3>html</h3>
                       <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;CheckboxCtrl&quot;&gt;
+  &lt;div&gt;
+    &lt;h4&gt;basicCheckbox&lt;/h4&gt;
   &lt;a href=&quot;#&quot; editable-checkbox=&quot;user.remember&quot; e-title=&quot;Remember?&quot;&gt;
     {{ user.remember &amp;&amp; &quot;Remember me!&quot; || &quot;Don't remember&quot; }}
   &lt;/a&gt;
+  &lt;/div&gt;
+  &lt;div&gt;
+    &lt;h4&gt;customCheckbox&lt;/h4&gt;
+    &lt;a href=&quot;#&quot; editable-checkbox-custom=&quot;user.remember&quot; e-title=&quot;Remember?&quot;&gt;
+      {{ user.remember &amp;&amp; &quot;Remember me!&quot; || &quot;Don't remember&quot; }}
+    &lt;/a&gt;
+  &lt;/div&gt;
 &lt;/div&gt;</pre>
                       <h3>controller.js</h3>
                       <pre class="prettyprint">app.controller('CheckboxCtrl', function($scope) {
