@@ -113,7 +113,7 @@ a.editable-empty:focus {
   text-decoration: none;
 }
 
-.bs-core-timepicker-popup {
+.bs-core-datetimepicker-popup {
   position: absolute;
   border: 1px solid #ccc;
   border-radius: 4px;

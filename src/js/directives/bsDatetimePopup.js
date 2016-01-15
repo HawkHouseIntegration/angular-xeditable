@@ -1,24 +1,31 @@
 /*
- Angular-ui bootstrap editable timepicker
+ Angular-ui bootstrap editable datetimepicker
  http://angular-ui.github.io/bootstrap/#/timepicker
+ http://angular-ui.github.io/bootstrap/#/datepicker
  */
-angular.module('xeditable').directive('editableBstimePopup', ['editableDirectiveFactory',
+angular.module('xeditable').directive('editableBsdatetimePopup', ['editableDirectiveFactory',
     function(editableDirectiveFactory) {
         return editableDirectiveFactory({
-            directiveName: 'editableBstimePopup',
-            inputTpl: '<editable-bstime-popup-internal></editable-bstime-popup-internal>',
+            directiveName: 'editableBsdatetimePopup',
+            inputTpl: '<editable-bsdatetime-popup-internal></editable-bsdatetime-popup-internal>',
             render: function() {
                 this.parent.render.call(this);
+
+                this.inputEl.attr('e-mode', this.attrs.eMode);
+                this.inputEl.attr('e-datetime-format', this.attrs.eDatetimeFormat);
             }
         });
     }]);
 
-angular.module('xeditable').directive('editableBstimePopupInternal', ['$compile', '$document', '$uibPosition', function($compile, $document, $position){
+angular.module('xeditable').directive('editableBsdatetimePopupInternal', ['$compile', '$document', '$uibPosition', function($compile, $document, $position){
     function link($scope, $element, attr){
         $scope.isOpen = false;
         $scope.popupPosition = {};
 
-        $scope.openTimepicker = openTimepicker;
+        $scope.mode = attr.eMode;
+        var format = attr.eDatetimeFormat;
+
+        $scope.openPicker = openPicker;
 
         if(!$scope.$popup) {
             $scope.$popup = createPopup();
@@ -33,11 +40,11 @@ angular.module('xeditable').directive('editableBstimePopupInternal', ['$compile'
         });
 
         $scope.$watch('$data', function(newValue){
-            var timeMoment = moment(newValue);
-            $scope.timeModel = timeMoment.isValid() ? timeMoment.format('HH:mm') : '';
+            var datetimeMoment = moment(newValue);
+            $scope.dateTimeModel = datetimeMoment.isValid() ? datetimeMoment.format(format) : '';
         });
 
-        function openTimepicker() {
+        function openPicker() {
             $scope.isOpen = !$scope.isOpen;
 
             $document[$scope.isOpen ? 'on' : 'off']('click', outClickHandler);
@@ -76,7 +83,7 @@ angular.module('xeditable').directive('editableBstimePopupInternal', ['$compile'
                 }
             }
 
-             var popup = $scope.$popup[0];
+            var popup = $scope.$popup[0];
             if (popup.contains !== undefined && popup.contains(e.target)) {
                 return;
             }
@@ -89,13 +96,14 @@ angular.module('xeditable').directive('editableBstimePopupInternal', ['$compile'
         function createPopup() {
             var $popup;
 
-            var popupEl = angular.element('<div bs-core-time-popup></div>');
+            var popupEl = angular.element('<div bs-core-datetime-popup></div>');
 
             popupEl.attr({
                 'popup-position': 'popupPosition',
                 'is-open': 'isOpen',
-                'time-model': '$data',
-                'on-change': 'openTimepicker()'
+                'date-time-model': '$data',
+                'on-change': 'openPicker()',
+                'mode': 'mode'
             });
             $popup = $compile(popupEl)($scope);
             popupEl.remove();
@@ -107,9 +115,9 @@ angular.module('xeditable').directive('editableBstimePopupInternal', ['$compile'
     return {
         restrict: 'E',
         template: "<div class=\"input-group\">\n" +
-        "    <input type=\"text\" class=\"form-control\" disabled ng-model=\"timeModel\"/>\n" +
+        "    <input type=\"text\" class=\"form-control\" disabled ng-model=\"dateTimeModel\"/>\n" +
         "    <span class=\"input-group-btn\">\n" +
-        "        <button type=\"button\" class=\"btn btn-default\" ng-click='openTimepicker()'><i class=\"glyphicon glyphicon-time\"></i></button>\n" +
+        "        <button type=\"button\" class=\"btn btn-default\" ng-click='openPicker()'><i class=\"glyphicon\" ng-class=\"{'glyphicon-time': mode === 'time', 'glyphicon-calendar': mode !== 'time'}\"></i></button>\n" +
         "    </span>\n" +
         "</div>\n" +
         "",
@@ -117,18 +125,24 @@ angular.module('xeditable').directive('editableBstimePopupInternal', ['$compile'
     };
 }]);
 
-angular.module('xeditable').directive('bsCoreTimePopup', function(){
+angular.module('xeditable').directive('bsCoreDatetimePopup', function(){
     return {
         restrict: 'A',
         template: "<div class=\"bs-core-datetimepicker-popup\" ng-show=\"isOpen\" ng-style=\"{top: popupPosition.top+'px', left: popupPosition.left+'px'}\">\n" +
-        "    <uib-timepicker ng-model=\"timeModel\" hour-step=\"1\" minute-step=\"1\" show-meridian=\"false\" style=\"margin: 0 auto\"></uib-timepicker>\n" +
+        "    <div ng-if='mode !== date'>\n" +
+        "        <uib-timepicker ng-model=\"$parent.dateTimeModel\" hour-step=\"1\" minute-step=\"1\" show-meridian=\"false\" style=\"margin: 0 auto\"></uib-timepicker>\n" +
+        "    </div>\n" +
+        "    <div ng-if='mode !== time'>\n" +
+        "        <uib-datepicker ng-model=\"$parent.dateTimeModel\" style=\"margin: 0 auto\"></uib-datepicker>\n" +
+        "    </div>\n" +
         "</div>\n" +
         "",
         scope: {
             'isOpen': '=',
             'popupPosition': '=',
-            'timeModel': '=',
-            'onChange': '&'
+            'dateTimeModel': '=',
+            'onChange': '&',
+            'mode': '@'
         },
         replace: true,
         transclude: true
