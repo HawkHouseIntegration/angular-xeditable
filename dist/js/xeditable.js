@@ -1,7 +1,7 @@
 /*!
 angular-xeditable - 0.1.9
 Edit-in-place for angular.js
-Build date: 2016-01-15 
+Build date: 2016-01-18 
 */
 /**
  * Angular-xeditable module 
@@ -226,7 +226,7 @@ angular.module('xeditable').directive('bsCoreDatetimePopup', function(){
         "        <uib-timepicker ng-model=\"$parent.dateTimeModel\" hour-step=\"1\" minute-step=\"1\" show-meridian=\"false\" style=\"margin: 0 auto\"></uib-timepicker>\n" +
         "    </div>\n" +
         "    <div ng-if=\"mode !== 'time'\">\n" +
-        "        <uib-datepicker ng-model=\"$parent.dateTimeModel\" starting-day=\"1\" close-on-date-selection=\"true\" style=\"margin: 0 auto\"></uib-datepicker>\n" +
+        "        <uib-datepicker ng-model=\"$parent.dateTimeModel\" starting-day=\"1\" ng-change=\"openPicker()\" style=\"margin: 0 auto\"></uib-datepicker>\n" +
         "    </div>\n" +
         "</div>\n" +
         "",
