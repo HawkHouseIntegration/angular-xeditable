@@ -14,6 +14,7 @@ module.exports = [
         {id: 'bstime', text: 'Time', fiddle: 'http://jsfiddle.net/NfPcH/34/', fiddleText: 'View Bootstrap 2 jsFiddle'},
         {id: 'combodate', text: 'DateTime', fiddle: '', fiddleText: 'No jsFiddle'},
         {id: 'bsdatetime', text: 'DateTimePopup', fiddle: '', fiddleText: ''},
+        {id: 'bsFile', text: 'File upload', fiddle: '', fiddleText: ''},
         {id: 'typeahead', text: 'Typeahead', fiddle: 'http://jsfiddle.net/NfPcH/46/', fiddleText: 'View Bootstrap 2 jsFiddle'}
     ]},
 
