@@ -1,7 +1,7 @@
 /*!
 angular-xeditable - 0.1.9
 Edit-in-place for angular.js
-Build date: 2016-01-18 
+Build date: 2016-02-11 
 */
 /**
  * Angular-xeditable module 
@@ -241,6 +241,70 @@ angular.module('xeditable').directive('bsCoreDatetimePopup', function(){
         transclude: true
     };
 });
+/*angular.module('xeditable').directive('editableBsfile', ['editableDirectiveFactory',
+    function(editableDirectiveFactory) {
+        return editableDirectiveFactory({
+            directiveName: 'editableBsfile',
+            inputTpl: '<editable-bsfile-internal></editable-bsfile-internal>'
+        });
+    }]);
+
+angular.module('xeditable').directive('editableBsfileInternal', function(){
+    function link($scope, $element, attr){
+        $scope.uploadFiles = function(file, invalidFiles){
+            $scope.f = file;
+            $scope.errFile = invalidFiles && invalidFiles[0];
+            if (file) {
+                file.upload = Upload.upload({
+                    url: 'https://angular-file-upload-cors-srv.appspot.com/upload',
+                    data: {file: file}
+                });
+
+                file.upload.then(function (response) {
+                    $timeout(function () {
+                        file.result = response.data;
+                    });
+                }, function (response) {
+                    if (response.status > 0)
+                        $scope.errorMsg = response.status + ': ' + response.data;
+                }, function (evt) {
+                    file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total, 10));
+                });
+            }
+        };
+
+        $scope.$watch('data', function(newVal, oldVal){
+            var x = 1;
+        });
+    }
+    return {
+        restrict: 'E',
+        template: "<div>\n" +
+            "<input type=\"file\" class=\"btn btn-default btn-sm\" file-model=\"data\"><i class=\"glyphicon glyphicon-file\"></i></input>\n" +
+            "<span ng-bind=\"f.name\"></span>\n" +
+        "</div>",
+        link: link
+    };
+});
+
+angular.module('xeditable').directive('fileModel', ['$parse', function($parse){
+    return {
+        restrict: 'A',
+        link: function(scope, elem, attr){
+            var model = $parse(attr.fileModel);
+
+            elem.on('change', function(){
+                scope.$apply(function(){
+                    model.assign(scope, elem[0].files);
+                });
+            });
+
+            scope.$on('$destroy', function(){
+                elem.off('change');
+            });
+        }
+    };
+}]);*/
 /*
  Angular-ui bootstrap editable timepicker
  http://angular-ui.github.io/bootstrap/#/timepicker
@@ -498,7 +562,7 @@ angular.module('xeditable').directive('editableCheckboxCustom', ['editableDirect
   function(editableDirectiveFactory) {
     return editableDirectiveFactory({
       directiveName: 'editableCheckboxCustom',
-      inputTpl: '<div class="checkbox"><label><input type="checkbox" ng-model="$data" ng-true-value="\'True\'" ng-false-value="\'False\'"><span ng-bind="$data"></span></label></div>',
+      inputTpl: '<div class="checkbox"><label><input type="checkbox" ng-model="$data" ng-true-value="\'True\'" ng-false-value="\'False\'"><span></span></label></div>',
       render: function() {
         this.parent.render.call(this);
       },

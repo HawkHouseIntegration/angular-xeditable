@@ -109,6 +109,7 @@
                   <li><a href="#bstime">Time</a></li>
                   <li><a href="#combodate">DateTime</a></li>
                   <li><a href="#bsdatetime">DateTimePopup</a></li>
+                  <li><a href="#bsFile">File upload</a></li>
                   <li><a href="#typeahead">Typeahead</a></li>
                 </ul>
               </li>
@@ -917,6 +918,42 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["bsdatetime"]=v; }); })
 
         $scope.opened[elementOpened] = !$scope.opened[elementOpened];
     };
+});</pre>
+                    </section>
+                    <section id="bsFile">
+                      <h1>File upload</h1>
+                      <!-- watch change of user to update rootScope for debugging-->
+                      <h3>demo</h3>
+                      <div class="well line-example"><div ng-controller="FileCtrl">
+    <div>
+        <!--<a editable-bsfile="file" blur="ignore">{{file || 'empty'}}</a>-->
+    </div>
+</div></div>
+                      <pre>{{ debug["bsFile"] | json }}</pre>
+                      <p><p>To make element editable via file uploader just add <code>editable-file</code> attribute
+pointing to model in scope.</p>
+</p>
+                      <!--script(src=dir+'/controller.js')-->
+                      <script>app.controller('FileCtrl', function($scope) {
+    $scope.file = null;
+
+    $scope.uploadFiles = function(file, err){
+        var x = 1;
+    }
+$scope.$watch("user", function(v) { $scope.$parent.debug["bsFile"]=v; }); });</script>
+                      <h3>html</h3>
+                      <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;FileCtrl&quot;&gt;
+    &lt;div&gt;
+        &lt;!--&lt;a editable-bsfile=&quot;file&quot; blur=&quot;ignore&quot;&gt;{{file || 'empty'}}&lt;/a&gt;--&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</pre>
+                      <h3>controller.js</h3>
+                      <pre class="prettyprint">app.controller('FileCtrl', function($scope) {
+    $scope.file = null;
+
+    $scope.uploadFiles = function(file, err){
+        var x = 1;
+    }
 });</pre>
                     </section>
                     <section id="typeahead">

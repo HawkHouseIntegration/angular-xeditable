@@ -1,4 +1,4 @@
-angular.module('xeditable').directive('editableBsfile', ['editableDirectiveFactory',
+/*angular.module('xeditable').directive('editableBsfile', ['editableDirectiveFactory',
     function(editableDirectiveFactory) {
         return editableDirectiveFactory({
             directiveName: 'editableBsfile',
@@ -61,4 +61,4 @@ angular.module('xeditable').directive('fileModel', ['$parse', function($parse){
             });
         }
     };
-}]);
+}]);*/

@@ -28,7 +28,7 @@ angular.module('xeditable').directive('editableCheckboxCustom', ['editableDirect
   function(editableDirectiveFactory) {
     return editableDirectiveFactory({
       directiveName: 'editableCheckboxCustom',
-      inputTpl: '<div class="checkbox"><label><input type="checkbox" ng-model="$data" ng-true-value="\'True\'" ng-false-value="\'False\'"><span ng-bind="$data"></span></label></div>',
+      inputTpl: '<div class="checkbox"><label><input type="checkbox" ng-model="$data" ng-true-value="\'True\'" ng-false-value="\'False\'"><span></span></label></div>',
       render: function() {
         this.parent.render.call(this);
       },
