@@ -1,7 +1,7 @@
 /*!
 angular-xeditable - 0.1.9
 Edit-in-place for angular.js
-Build date: 2016-01-18 
+Build date: 2016-02-11 
 */
 /**
  * Angular-xeditable module 
@@ -498,7 +498,7 @@ angular.module('xeditable').directive('editableCheckboxCustom', ['editableDirect
   function(editableDirectiveFactory) {
     return editableDirectiveFactory({
       directiveName: 'editableCheckboxCustom',
-      inputTpl: '<div class="checkbox"><label><input type="checkbox" ng-model="$data" ng-true-value="\'True\'" ng-false-value="\'False\'"><span ng-bind="$data"></span></label></div>',
+      inputTpl: '<div class="checkbox"><label><input type="checkbox" ng-model="$data" ng-true-value="\'True\'" ng-false-value="\'False\'"><span></span></label></div>',
       render: function() {
         this.parent.render.call(this);
       },
