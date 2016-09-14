@@ -122,3 +122,7 @@ a.editable-empty:focus {
   z-index: 10;
 }
 
+.bs-core-datetimepicker-popup div[uib-timepicker] > table {
+  margin: 0 auto;
+}
+

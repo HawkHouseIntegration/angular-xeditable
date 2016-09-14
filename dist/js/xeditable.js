@@ -1,7 +1,7 @@
 /*!
 angular-xeditable - 0.1.9
 Edit-in-place for angular.js
-Build date: 2016-02-11 
+Build date: 2016-09-14 
 */
 /**
  * Angular-xeditable module 
@@ -96,6 +96,8 @@ angular.module('xeditable').directive('editableBsdatetimePopup', ['editableDirec
 
                 this.inputEl.attr('e-mode', this.attrs.eMode);
                 this.inputEl.attr('e-datetime-format', this.attrs.eDatetimeFormat);
+                this.inputEl.attr('e-starting-day', this.attrs.eStartingDay);
+                this.inputEl.attr('e-show-meridian', this.attrs.eShowMeridian);
             }
         });
     }]);
@@ -107,6 +109,12 @@ angular.module('xeditable').directive('editableBsdatetimePopupInternal', ['$comp
 
         $scope.mode = attr.eMode;
         var format = attr.eDatetimeFormat;
+
+        $scope.dateOptions = {
+            startingDay: attr.eStartingDay && parseInt(attr.eStartingDay, 10) || 1
+        };
+
+        $scope.showMeridian = attr.eShowMeridian && attr.eShowMeridian.toLowerCase() === 'true';
 
         $scope.openPicker = openPicker;
 
@@ -133,7 +141,7 @@ angular.module('xeditable').directive('editableBsdatetimePopupInternal', ['$comp
                 }
             }
             else {
-                $scope.dateTimeModel = '';
+                $scope.dateTimeModel =  $filter('date')(newValue, format) || '';
             }
         });
 
@@ -196,7 +204,9 @@ angular.module('xeditable').directive('editableBsdatetimePopupInternal', ['$comp
                 'is-open': 'isOpen',
                 'date-time-model': '$data',
                 'on-change': 'openPicker()',
-                'mode': 'mode'
+                'mode': 'mode',
+                'date-options': 'dateOptions',
+                'show-meridian': 'showMeridian'
             });
             $popup = $compile(popupEl)($scope);
             popupEl.remove();
@@ -222,11 +232,11 @@ angular.module('xeditable').directive('bsCoreDatetimePopup', function(){
     return {
         restrict: 'A',
         template: "<div class=\"bs-core-datetimepicker-popup\" ng-show=\"isOpen\" ng-style=\"{top: popupPosition.top+'px', left: popupPosition.left+'px'}\">\n" +
-        "    <div ng-if=\"mode !== 'date'\" ng-click='console.log(mode)'>\n" +
-        "        <uib-timepicker ng-model=\"$parent.dateTimeModel\" hour-step=\"1\" minute-step=\"1\" show-meridian=\"false\" style=\"margin: 0 auto\"></uib-timepicker>\n" +
+        "    <div ng-if=\"mode !== 'date'\">\n" +
+        "        <div uib-timepicker ng-model=\"$parent.dateTimeModel\" hour-step=\"1\" minute-step=\"1\" show-meridian=\"$parent.showMeridian\"></div>\n" +
         "    </div>\n" +
         "    <div ng-if=\"mode !== 'time'\">\n" +
-        "        <uib-datepicker ng-model=\"$parent.dateTimeModel\" starting-day=\"1\" ng-change=\"openPicker()\" style=\"margin: 0 auto\"></uib-datepicker>\n" +
+        "        <div uib-datepicker ng-model=\"$parent.dateTimeModel\" date-options=\"$parent.dateOptions\" ng-change=\"openPicker()\"></div>\n" +
         "    </div>\n" +
         "</div>\n" +
         "",
@@ -235,7 +245,9 @@ angular.module('xeditable').directive('bsCoreDatetimePopup', function(){
             'popupPosition': '=',
             'dateTimeModel': '=',
             'onChange': '&',
-            'mode': '='
+            'mode': '=',
+            'dateOptions': '=',
+            'showMeridian': '='
         },
         replace: true,
         transclude: true
@@ -252,6 +264,9 @@ angular.module('xeditable').directive('editableBstimePopup', ['editableDirective
             inputTpl: '<editable-bstime-popup-internal></editable-bstime-popup-internal>',
             render: function() {
                 this.parent.render.call(this);
+
+                this.inputEl.attr('e-show-meridian', this.attrs.eShowMeridian);
+                this.inputEl.attr('e-datetime-format', this.attrs.eDatetimeFormat);
             }
         });
     }]);
@@ -260,6 +275,9 @@ angular.module('xeditable').directive('editableBstimePopupInternal', ['$compile'
     function link($scope, $element, attr){
         $scope.isOpen = false;
         $scope.popupPosition = {};
+
+        $scope.showMeridian = attr.eShowMeridian && attr.eShowMeridian.toLowerCase() === 'true';
+        var format = attr.timeFormat || 'HH:mm';
 
         $scope.openTimepicker = openTimepicker;
 
@@ -276,8 +294,7 @@ angular.module('xeditable').directive('editableBstimePopupInternal', ['$compile'
         });
 
         $scope.$watch('$data', function(newValue){
-            var timeMoment = moment(newValue);
-            $scope.timeModel = timeMoment.isValid() ? timeMoment.format('HH:mm') : '';
+            $scope.timeModel = $filter('date')(newValue, format) || '';
         });
 
         function openTimepicker() {
@@ -338,7 +355,8 @@ angular.module('xeditable').directive('editableBstimePopupInternal', ['$compile'
                 'popup-position': 'popupPosition',
                 'is-open': 'isOpen',
                 'time-model': '$data',
-                'on-change': 'openTimepicker()'
+                'on-change': 'openTimepicker()',
+                'show-meridian': 'showMeridian'
             });
             $popup = $compile(popupEl)($scope);
             popupEl.remove();
@@ -364,14 +382,15 @@ angular.module('xeditable').directive('bsCoreTimePopup', function(){
     return {
         restrict: 'A',
         template: "<div class=\"bs-core-datetimepicker-popup\" ng-show=\"isOpen\" ng-style=\"{top: popupPosition.top+'px', left: popupPosition.left+'px'}\">\n" +
-        "    <uib-timepicker ng-model=\"timeModel\" hour-step=\"1\" minute-step=\"1\" show-meridian=\"false\" style=\"margin: 0 auto\"></uib-timepicker>\n" +
+        "    <div uib-timepicker ng-model=\"timeModel\" hour-step=\"1\" minute-step=\"1\" show-meridian=\"showMeridian\" style=\"margin: 0 auto\"></div>\n" +
         "</div>\n" +
         "",
         scope: {
             'isOpen': '=',
             'popupPosition': '=',
             'timeModel': '=',
-            'onChange': '&'
+            'onChange': '&',
+            'showMeridian': '='
         },
         replace: true,
         transclude: true

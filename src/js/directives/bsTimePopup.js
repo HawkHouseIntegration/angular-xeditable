@@ -9,6 +9,9 @@ angular.module('xeditable').directive('editableBstimePopup', ['editableDirective
             inputTpl: '<editable-bstime-popup-internal></editable-bstime-popup-internal>',
             render: function() {
                 this.parent.render.call(this);
+
+                this.inputEl.attr('e-show-meridian', this.attrs.eShowMeridian);
+                this.inputEl.attr('e-datetime-format', this.attrs.eDatetimeFormat);
             }
         });
     }]);
@@ -17,6 +20,9 @@ angular.module('xeditable').directive('editableBstimePopupInternal', ['$compile'
     function link($scope, $element, attr){
         $scope.isOpen = false;
         $scope.popupPosition = {};
+
+        $scope.showMeridian = attr.eShowMeridian && attr.eShowMeridian.toLowerCase() === 'true';
+        var format = attr.timeFormat || 'HH:mm';
 
         $scope.openTimepicker = openTimepicker;
 
@@ -33,8 +39,7 @@ angular.module('xeditable').directive('editableBstimePopupInternal', ['$compile'
         });
 
         $scope.$watch('$data', function(newValue){
-            var timeMoment = moment(newValue);
-            $scope.timeModel = timeMoment.isValid() ? timeMoment.format('HH:mm') : '';
+            $scope.timeModel = $filter('date')(newValue, format) || '';
         });
 
         function openTimepicker() {
@@ -95,7 +100,8 @@ angular.module('xeditable').directive('editableBstimePopupInternal', ['$compile'
                 'popup-position': 'popupPosition',
                 'is-open': 'isOpen',
                 'time-model': '$data',
-                'on-change': 'openTimepicker()'
+                'on-change': 'openTimepicker()',
+                'show-meridian': 'showMeridian'
             });
             $popup = $compile(popupEl)($scope);
             popupEl.remove();
@@ -121,14 +127,15 @@ angular.module('xeditable').directive('bsCoreTimePopup', function(){
     return {
         restrict: 'A',
         template: "<div class=\"bs-core-datetimepicker-popup\" ng-show=\"isOpen\" ng-style=\"{top: popupPosition.top+'px', left: popupPosition.left+'px'}\">\n" +
-        "    <uib-timepicker ng-model=\"timeModel\" hour-step=\"1\" minute-step=\"1\" show-meridian=\"false\" style=\"margin: 0 auto\"></uib-timepicker>\n" +
+        "    <div uib-timepicker ng-model=\"timeModel\" hour-step=\"1\" minute-step=\"1\" show-meridian=\"showMeridian\" style=\"margin: 0 auto\"></div>\n" +
         "</div>\n" +
         "",
         scope: {
             'isOpen': '=',
             'popupPosition': '=',
             'timeModel': '=',
-            'onChange': '&'
+            'onChange': '&',
+            'showMeridian': '='
         },
         replace: true,
         transclude: true
