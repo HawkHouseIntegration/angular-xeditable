@@ -20,6 +20,8 @@ angular.module('xeditable').directive('editableBstimePopupInternal', ['$compile'
     function link($scope, $element, attr){
         $scope.isOpen = false;
         $scope.popupPosition = {};
+        $scope.valid = true;
+
 
         $scope.showMeridian = attr.eShowMeridian && attr.eShowMeridian.toLowerCase() === 'true';
         var format = attr.timeFormat || 'HH:mm';
@@ -40,12 +42,28 @@ angular.module('xeditable').directive('editableBstimePopupInternal', ['$compile'
 
         $scope.$watch('$data', function(newValue){
             $scope.timeModel = $filter('date')(newValue, format) || '';
+            $scope.valid = true;
         });
+
+        function onChange(){
+            if($scope.timeModel === ''){
+                $scope.$data = null;
+                $scope.valid = true;
+            } else {
+                var newDate = uibDateParser.parse($scope.timeModel, format);
+                var currentDate = Object.prototype.toString.call($scope.$data) === "[object Date]" ? $scope.$data : new Date($scope.$data);
+
+                if(newDate && newDate.getTime() !== currentDate.getTime()){
+                    $scope.$data = newDate;
+                }
+                $scope.valid = newDate && newDate.getTime() ? true : false;
+            }
+        }
 
         function openTimepicker() {
             $scope.isOpen = !$scope.isOpen;
 
-            $document[$scope.isOpen ? 'on' : 'off']('click', outClickHandler);
+            $document[$scope.isOpen ? 'on' : 'off']('mousedown', outClickHandler);
 
             if($scope.isOpen) {
                 var coord = $position.positionElements($element, $scope.$popup, 'bottom', true);
@@ -87,7 +105,7 @@ angular.module('xeditable').directive('editableBstimePopupInternal', ['$compile'
             }
 
             $scope.isOpen = false;
-            $document.off('click', outClickHandler);
+            $document.off('mousedown', outClickHandler);
             return $scope.$digest();
         }
 
@@ -100,7 +118,6 @@ angular.module('xeditable').directive('editableBstimePopupInternal', ['$compile'
                 'popup-position': 'popupPosition',
                 'is-open': 'isOpen',
                 'time-model': '$data',
-                'on-change': 'openTimepicker()',
                 'show-meridian': 'showMeridian'
             });
             $popup = $compile(popupEl)($scope);
@@ -112,13 +129,12 @@ angular.module('xeditable').directive('editableBstimePopupInternal', ['$compile'
     }
     return {
         restrict: 'E',
-        template: "<div class=\"input-group\">\n" +
-        "    <input type=\"text\" class=\"form-control\" disabled ng-model=\"timeModel\"/>\n" +
+        template: "<div class=\"input-group\" ng-class=\"{'has-error': !valid}\">\n" +
+        "    <input type=\"text\" class=\"form-control\" ng-model=\"timeModel\" ng-change=\"\"/>\n" +
         "    <span class=\"input-group-btn\">\n" +
         "        <button type=\"button\" class=\"btn btn-default\" ng-click='openTimepicker()'><i class=\"glyphicon glyphicon-time\"></i></button>\n" +
         "    </span>\n" +
-        "</div>\n" +
-        "",
+        "</div>",
         link: link
     };
 }]);
@@ -128,16 +144,12 @@ angular.module('xeditable').directive('bsCoreTimePopup', function(){
         restrict: 'A',
         template: "<div class=\"bs-core-datetimepicker-popup\" ng-show=\"isOpen\" ng-style=\"{top: popupPosition.top+'px', left: popupPosition.left+'px'}\">\n" +
         "    <div uib-timepicker ng-model=\"timeModel\" hour-step=\"1\" minute-step=\"1\" show-meridian=\"showMeridian\" style=\"margin: 0 auto\"></div>\n" +
-        "</div>\n" +
-        "",
+        "</div>",
         scope: {
             'isOpen': '=',
             'popupPosition': '=',
             'timeModel': '=',
-            'onChange': '&',
             'showMeridian': '='
-        },
-        replace: true,
-        transclude: true
+        }
     };
 });
