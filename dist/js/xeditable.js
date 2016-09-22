@@ -1,5 +1,5 @@
 /*!
-angular-xeditable - 1.0.0
+angular-xeditable - 1.0.1
 Edit-in-place for angular.js
 Build date: 2016-09-22 
 */
@@ -282,7 +282,7 @@ angular.module('xeditable').directive('editableBstimePopup', ['editableDirective
         });
     }]);
 
-angular.module('xeditable').directive('editableBstimePopupInternal', ['$compile', '$document', '$uibPosition', function($compile, $document, $position){
+angular.module('xeditable').directive('editableBstimePopupInternal', ['$compile', '$document', '$uibPosition', '$filter', 'uibDateParser', function($compile, $document, $position, $filter, uibDateParser){
     function link($scope, $element, attr){
         $scope.isOpen = false;
         $scope.popupPosition = {};
@@ -290,7 +290,7 @@ angular.module('xeditable').directive('editableBstimePopupInternal', ['$compile'
 
 
         $scope.showMeridian = attr.eShowMeridian && attr.eShowMeridian.toLowerCase() === 'true';
-        var format = attr.timeFormat || 'HH:mm';
+        var format = attr.eDatetimeFormat || 'HH:mm';
 
         $scope.openTimepicker = openTimepicker;
 
