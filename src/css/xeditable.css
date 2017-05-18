@@ -126,3 +126,8 @@ a.editable-empty:focus {
   margin: 0 auto;
 }
 
+.editable-bsdatetime-popup {
+  position: relative;
+  top: 3px;
+}
+
