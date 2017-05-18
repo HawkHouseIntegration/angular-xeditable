@@ -11,22 +11,32 @@ angular.module('xeditable').directive('editableBsdatetimePopup', ['editableDirec
             render: function() {
                 this.parent.render.call(this);
 
-                this.inputEl.attr('e-mode', this.attrs.eMode);
-                this.inputEl.attr('e-datetime-format', this.attrs.eDatetimeFormat);
-                this.inputEl.attr('e-starting-day', this.attrs.eStartingDay);
-                this.inputEl.attr('e-show-meridian', this.attrs.eShowMeridian);
+                var _this = this;
+
+                _this.inputEl.attr('e-mode', _this.attrs.eMode);
+                _this.inputEl.attr('e-datetime-format', _this.attrs.eDatetimeFormat);
+                _this.inputEl.attr('e-starting-day', _this.attrs.eStartingDay);
+                _this.inputEl.attr('e-show-meridian', _this.attrs.eShowMeridian);
+
+                _this.attrs.$observe('eLang', function(newValue){
+                    _this.inputEl.attr('e-mode', _this.attrs.eMode);
+                    _this.inputEl.attr('e-datetime-format', _this.attrs.eDatetimeFormat);
+                    _this.inputEl.attr('e-starting-day', _this.attrs.eStartingDay);
+                    _this.inputEl.attr('e-show-meridian', _this.attrs.eShowMeridian);
+                    _this.inputEl.attr('e-lang', _this.attrs.eLang);
+                });
             }
         });
     }]);
 
 angular.module('xeditable').directive('editableBsdatetimePopupInternal', ['$compile', '$document', '$uibPosition', '$filter', 'uibDateParser', function($compile, $document, $position, $filter, uibDateParser){
-    function link($scope, $element, attr){
+    function link($scope, $element, attrs){
         $scope.isOpen = false;
         $scope.popupPosition = {};
         $scope.valid = true;
 
         $scope.mode = attr.eMode;
-        var format = attr.eDatetimeFormat;
+        $scope.format = attr.eDatetimeFormat;
 
         $scope.dateOptions = {
             startingDay: attr.eStartingDay && parseInt(attr.eStartingDay, 10) || 1
@@ -41,6 +51,26 @@ angular.module('xeditable').directive('editableBsdatetimePopupInternal', ['$comp
             $scope.$popup = createPopup();
         }
 
+        $scope.$watch(function(){
+            return attrs.$$element[0].getAttribute('e-lang');
+        }, function (newValue) {
+            var elem = attrs.$$element[0];
+
+            var startingDay = elem.getAttribute('e-starting-day');
+            var showMeridian = elem.getAttribute('e-show-meridian');
+            var dateTimeFormat = elem.getAttribute('e-datetime-format');
+
+            $scope.dateOptions.startingDay = startingDay !== undefined ? parseInt(startingDay, 10) : 1;
+            $scope.showMeridian = showMeridian && showMeridian.toLowerCase() === 'true';
+            $scope.format = dateTimeFormat;
+            initDateTimeModel($scope.$data);
+
+            if($scope.$popup){
+                $scope.$popup.remove();
+                $scope.$popup = createPopup();
+            }
+        });
+
         $scope.$on('$destroy', function () {
             $document.off('mousedown', outClickHandler);
 
@@ -49,24 +79,26 @@ angular.module('xeditable').directive('editableBsdatetimePopupInternal', ['$comp
             }
         });
 
-        $scope.$watch('$data', function(newValue){
+        $scope.$watch('$data', initDateTimeModel);
+
+        function initDateTimeModel(newValue){
             if (!newValue || Object.prototype.toString.call(newValue) === "[object Date]" && isNaN( newValue.getTime() ) ) {
                 $scope.dateTimeModel = '';
             } else {
-                var newDateTimeModel = $filter('date')(newValue, format);
+                var newDateTimeModel = $filter('date')(newValue, $scope.format);
                 if(newDateTimeModel !== $scope.dateTimeModel){
                     $scope.dateTimeModel = newDateTimeModel;
                 }
             }
             $scope.valid = true;
-        });
+        }
 
         function onChange(){
             if($scope.dateTimeModel === ''){
                 $scope.$data = null;
                 $scope.valid = true;
             } else {
-                var newDate = uibDateParser.parse($scope.dateTimeModel, format);
+                var newDate = uibDateParser.parse($scope.dateTimeModel, $scope.format);
                 var currentDate = Object.prototype.toString.call($scope.$data) === "[object Date]" ? $scope.$data : new Date($scope.$data);
 
                 if(newDate && newDate.getTime() !== currentDate.getTime()){
