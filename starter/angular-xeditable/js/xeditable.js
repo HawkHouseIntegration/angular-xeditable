@@ -118,14 +118,14 @@ angular.module('xeditable').directive('editableBsdatetimePopupInternal', ['$comp
         $scope.popupPosition = {};
         $scope.valid = true;
 
-        $scope.mode = attr.eMode;
-        $scope.format = attr.eDatetimeFormat;
+        $scope.mode = attrs.eMode;
+        $scope.format = attrs.eDatetimeFormat;
 
         $scope.dateOptions = {
-            startingDay: attr.eStartingDay && parseInt(attr.eStartingDay, 10) || 1
+            startingDay: attrs.eStartingDay && parseInt(attrs.eStartingDay, 10) || 1
         };
 
-        $scope.showMeridian = attr.eShowMeridian && attr.eShowMeridian.toLowerCase() === 'true';
+        $scope.showMeridian = attrs.eShowMeridian && attrs.eShowMeridian.toLowerCase() === 'true';
 
         $scope.openPicker = openPicker;
         $scope.onChange = onChange;
