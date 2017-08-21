@@ -39,7 +39,7 @@ angular.module('xeditable').directive('editableBsdatetimePopupInternal', ['$comp
         $scope.format = attrs.eDatetimeFormat;
 
         $scope.dateOptions = {
-            startingDay: attrs.eStartingDay && parseInt(attrs.eStartingDay, 10) || 1
+            startingDay: parseStartingDay(attrs.eStartingDay)
         };
 
         $scope.showMeridian = attrs.eShowMeridian && attrs.eShowMeridian.toLowerCase() === 'true';
@@ -60,7 +60,7 @@ angular.module('xeditable').directive('editableBsdatetimePopupInternal', ['$comp
             var showMeridian = elem.getAttribute('e-show-meridian');
             var dateTimeFormat = elem.getAttribute('e-datetime-format');
 
-            $scope.dateOptions.startingDay = startingDay !== undefined ? parseInt(startingDay, 10) : 1;
+            $scope.dateOptions.startingDay = parseStartingDay(startingDay);
             $scope.showMeridian = showMeridian && showMeridian.toLowerCase() === 'true';
             $scope.format = dateTimeFormat;
             initDateTimeModel($scope.$data);
@@ -176,6 +176,15 @@ angular.module('xeditable').directive('editableBsdatetimePopupInternal', ['$comp
             $document.find('body').append($popup);
 
             return $popup;
+        }
+
+        function parseStartingDay(startingDay) {
+            if(!startingDay) {
+                return 1;
+            }
+
+            var res = parseInt(startingDay, 10);
+            return isNaN(res) ? 1 : res;
         }
     }
     return {
