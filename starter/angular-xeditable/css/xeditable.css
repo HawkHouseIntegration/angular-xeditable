@@ -131,3 +131,19 @@ a.editable-empty:focus {
   top: 3px;
 }
 
+.editable-money {
+	position: relative;
+}
+
+.editable-money__currency {
+    position: absolute;
+    height: 100%;
+    border: none;
+    padding: 7px 10px 10px;
+    color: #999;
+}
+
+.editable-money__masked-field {
+    padding-left: 24px;
+}
+
