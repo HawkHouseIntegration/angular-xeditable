@@ -4,9 +4,8 @@ angular.module('xeditable').directive('editableMoney', ['editableDirectiveFactor
       directiveName: 'editableMoney',
       inputTpl: '' +
         '<div class="editable-money">'+
-            '<span class="editable-money__currency">&#8381;</span>' +
             '<input type="text" class="form-control editable-money__masked-field"' +
-                'ng-model="mask.value"/>' +
+                '/>' +
         '</div>',
       render: function() {
         var self = this;

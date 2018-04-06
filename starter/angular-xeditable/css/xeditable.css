@@ -144,6 +144,6 @@ a.editable-empty:focus {
 }
 
 .editable-money__masked-field {
-    padding-left: 24px;
+    /*padding-left: 24px;*/
 }
 

@@ -1,7 +1,7 @@
 /*!
 angular-xeditable - 1.2.0
 Edit-in-place for angular.js
-Build date: 2018-01-23 
+Build date: 2018-04-06 
 */
 /**
  * Angular-xeditable module 
@@ -682,9 +682,8 @@ angular.module('xeditable').directive('editableMoney', ['editableDirectiveFactor
       directiveName: 'editableMoney',
       inputTpl: '' +
         '<div class="editable-money">'+
-            '<span class="editable-money__currency">&#8381;</span>' +
             '<input type="text" class="form-control editable-money__masked-field"' +
-                'ng-model="mask.value"/>' +
+                '/>' +
         '</div>',
       render: function() {
         var self = this;
