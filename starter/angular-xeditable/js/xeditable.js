@@ -1,7 +1,7 @@
 /*!
-angular-xeditable - 1.2.0
+angular-xeditable - 1.2.2
 Edit-in-place for angular.js
-Build date: 2018-04-06 
+Build date: 2018-04-16 
 */
 /**
  * Angular-xeditable module 
@@ -694,7 +694,7 @@ angular.module('xeditable').directive('editableMoney', ['editableDirectiveFactor
 
             // other options are optional with defaults below
             scale: 2,  // digits after point, 0 for integers
-            signed: false,  // disallow negative
+            signed: true,  // disallow negative
             thousandsSeparator: ' ',  // any single char
             padFractionalZeros: false,  // if true, then pads zeros at end to the length of scale
             normalizeZeros: true,  // appends or removes zeros at ends
